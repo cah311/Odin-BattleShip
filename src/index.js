@@ -2,6 +2,8 @@ import _ from 'lodash';
 import './style.css';
 import printMe from './print.js';
 
+const sum = require('./sum.js');
+
 function component() {
   const element = document.createElement('div');
   const btn = document.createElement('button');
@@ -17,5 +19,8 @@ function component() {
 
   return element;
 }
+
+let num = sum(2, 13);
+console.log('Num =' + num);
 
 document.body.appendChild(component());
