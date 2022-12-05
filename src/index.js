@@ -3,16 +3,17 @@ import './style.css';
 import printMe from './print.js';
 
 const sum = require('./sum.js');
+const Ship = require('./shipFactory.js');
 
-function component() {
+function newShip() {
   const element = document.createElement('div');
   const btn = document.createElement('button');
 
   // Lodash, now imported by this script
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-  element.classList.add('hello');
+  element.innerHTML = 'Create a ship:';
+  element.classList.add('create-ship-button');
 
-  btn.innerHTML = 'Click me and check the console!';
+  btn.innerHTML = 'Click me for new ship';
   btn.onclick = printMe;
 
   element.appendChild(btn);
@@ -23,4 +24,10 @@ function component() {
 let num = sum(2, 13);
 console.log('Num =' + num);
 
-document.body.appendChild(component());
+const myNewShip = Ship('beezlebob', 'submarine');
+console.log(myNewShip);
+console.log(myNewShip.getPlayer());
+console.log(myNewShip.getType());
+console.log(myNewShip.getLength());
+
+document.body.appendChild(newShip());
