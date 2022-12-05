@@ -2,6 +2,8 @@ const Ship = require('./shipFactory');
 
 function Gameboard() {
   const cells = [];
+  let missedCells = 0;
+  const missedCellArray = [];
   const xAxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const yAxis = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   for (let i = 0; i <= yAxis.length - 1; i++) {
@@ -19,8 +21,6 @@ function Gameboard() {
       let currentCoord = shipCoord[i];
 
       while (currentCoord != cells[j].coordinate) {
-        console.log(currentCoord);
-        console.log(cells[j].coordinate);
         j++;
         k++;
       }
@@ -28,16 +28,25 @@ function Gameboard() {
     }
   };
 
-  const recieveAttack = () => {};
+  const recieveAttack = (cellCoordinates) => {
+    let cellTest = cells.find((cell) => cell.coordinate === cellCoordinates);
+    if (cellTest.cellSpace == 'is empty') {
+      missedCellArray.push(cellCoordinates);
+      missedCells++;
+      return missedCells;
+    } else {
+      let shipIdentifier = cellTest.cellSpace;
+      shipIdentifier.hit();
+    }
+  };
 
-  return { cells, shipPlacement, recieveAttack };
+  return { cells, missedCellArray, missedCells, shipPlacement, recieveAttack };
 }
 
 function GameboardCell(xCoordinate, yCoordinate, hasShip) {
   const x = xCoordinate;
   const y = yCoordinate;
 
-  //   const cellName = `${x}${y}`;
   const coordinate = `${x}${y}`;
 
   const cellSpace = 'is empty';

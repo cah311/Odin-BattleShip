@@ -24,16 +24,18 @@ function Ship(player, type, coordinates) {
 
   const hit = () => {
     hits++;
-    // console.log(`hit${hits}`);
+    if (hits == getLength()) {
+      isSunk();
+    }
     return hits;
   };
 
   const isSunk = () => {
-    if (hits == getLength()) {
-      return true;
-    } else {
-      return false;
-    }
+    // if (hits == getLength()) {
+    return true;
+    // } else {
+    //   return false;
+    // }
   };
 
   return {

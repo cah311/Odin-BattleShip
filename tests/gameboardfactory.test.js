@@ -36,4 +36,23 @@ describe('Gameboard functions', () => {
       coordinate: '1C',
     });
   });
+
+  it('recieves attack', () => {
+    testBoard.recieveAttack('2B');
+    expect(testBoard.missedCellArray.length).toBe(1);
+  });
+
+  it('records hits on ship & sinks ship', () => {
+    testBoard.recieveAttack('1A');
+    testBoard.recieveAttack('1B');
+    testBoard.recieveAttack('1C');
+
+    const lastAttack = '1C';
+
+    let cellTest = testBoard.cells.find(
+      (cell) => cell.coordinate === lastAttack
+    );
+    let boat = cellTest.cellSpace;
+    expect(boat.isSunk()).toBe(true);
+  });
 });
