@@ -4,48 +4,51 @@
 // submarine = 3
 // patrol boat = 2
 
-function Ship(player, type, coordinates) {
-  let hits = 0;
+// const gameBoardFactory = require('./gameboardFactory');
+// const gameboard = gameBoardFactory.Gameboard;
+// let testBoard = gameboard();
 
-  const getPlayer = () => player;
+class Ship {
+  constructor(player, type, coordinates) {
+    this.player = player;
+    this.type = type;
+    this.shipName = `${player}'s ${type}`;
+    this.coordinates = coordinates;
+    this.hits = 0;
+    this.isSunk = false;
+  }
 
-  const getType = () => type;
+  getPlayer = () => this.player;
 
-  const setCoordinates = () => coordinates;
+  getType = () => this.type;
 
-  const shipName = `${player}'s ${type}`;
+  setCoordinates = () => this.coordinates;
 
-  const getLength = () => {
-    if (type == 'carrier') return 5;
-    if (type == 'battleship') return 4;
-    if (type == 'destroyer' || type == 'submarine') return 3;
-    if (type == 'patrol boat') return 2;
+  getLength = () => {
+    if (this.type == 'carrier') return 5;
+    if (this.type == 'battleship') return 4;
+    if (this.type == 'destroyer' || this.type == 'submarine') return 3;
+    if (this.type == 'patrol boat') return 2;
   };
 
-  const hit = () => {
-    hits++;
-    if (hits == getLength()) {
-      isSunk();
+  hit = () => {
+    this.hits++;
+    if (this.hits == this.getLength()) {
+      this.sinkShip(true);
+      return this.isSunk;
     }
-    return hits;
+    return this.hits;
   };
 
-  const isSunk = () => {
-    // if (hits == getLength()) {
-    return true;
-    // } else {
-    //   return false;
+  sunkStatus = () => {
+    return this.isSunk;
+  };
+  sinkShip = (value) => {
+    // gameboard.boats--;
+    // if (gameboard.boats == 0) {
+    //   gameboard.gameOver(gameboard.boats);
     // }
-  };
-
-  return {
-    getPlayer,
-    getType,
-    getLength,
-    shipName,
-    setCoordinates,
-    hit,
-    isSunk,
+    this.isSunk = value;
   };
 }
 

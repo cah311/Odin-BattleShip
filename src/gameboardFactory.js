@@ -1,58 +1,83 @@
 const Ship = require('./shipFactory');
 
-function Gameboard() {
-  const cells = [];
-  let missedCells = 0;
-  const missedCellArray = [];
-  const xAxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const yAxis = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-  for (let i = 0; i <= yAxis.length - 1; i++) {
-    for (let j = 0; j <= xAxis.length - 1; j++) {
-      cells.push(new GameboardCell(xAxis[j], yAxis[i]));
+class Gameboard {
+  constructor() {
+    this.cells = [];
+    this.boats = 0;
+    this.missedCells = 0;
+    this.missedCellArray = [];
+  }
+
+  getRemainingBoats = (remainingBoats) => {
+    return remainingBoats;
+  };
+
+  buildGameboard() {
+    const xAxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const yAxis = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    for (let i = 0; i <= yAxis.length - 1; i++) {
+      for (let j = 0; j <= xAxis.length - 1; j++) {
+        this.cells.push(new GameboardCell(xAxis[j], yAxis[i]));
+      }
     }
   }
 
-  const shipPlacement = (playerName, shipType, coordinates) => {
-    let ship = Ship(playerName, shipType);
+  shipPlacement = (playerName, shipType, coordinates) => {
+    let ship = new Ship(playerName, shipType);
     let shipCoord = coordinates;
     for (let i = 0; i <= shipCoord.length - 1; i++) {
       let j = 0;
       let k = 0;
       let currentCoord = shipCoord[i];
-
-      while (currentCoord != cells[j].coordinate) {
+      //   console.log(this.cells[j].coordinate);
+      while (currentCoord != this.cells[j].coordinate) {
         j++;
         k++;
       }
-      cells[j].cellSpace = ship;
+      this.cells[j].cellSpace = ship;
     }
+    this.boats++;
   };
 
-  const recieveAttack = (cellCoordinates) => {
-    let cellTest = cells.find((cell) => cell.coordinate === cellCoordinates);
+  recieveAttack = (cellCoordinates) => {
+    let cellTest = this.cells.find(
+      (cell) => cell.coordinate === cellCoordinates
+    );
     if (cellTest.cellSpace == 'is empty') {
-      missedCellArray.push(cellCoordinates);
-      missedCells++;
-      return missedCells;
+      this.missedCellArray.push(cellCoordinates);
+      this.missedCells++;
+      return;
     } else {
       let shipIdentifier = cellTest.cellSpace;
       shipIdentifier.hit();
+      if (shipIdentifier.isSunk == true) {
+        this.boats--;
+        if (this.boats == 0) {
+          this.gameOver(this.boats);
+        }
+      }
     }
   };
 
-  return { cells, missedCellArray, missedCells, shipPlacement, recieveAttack };
+  gameOver = (remainingBoats) => {
+    if (remainingBoats == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 }
 
-function GameboardCell(xCoordinate, yCoordinate, hasShip) {
-  const x = xCoordinate;
-  const y = yCoordinate;
+class GameboardCell {
+  constructor(xCoordinate, yCoordinate, hasShip) {
+    this.xCoordinate = xCoordinate;
+    this.yCoordinate = yCoordinate;
+    this.hasShip = hasShip;
+    this.coordinate = `${xCoordinate}${yCoordinate}`;
 
-  const coordinate = `${x}${y}`;
-
-  const cellSpace = 'is empty';
-  if (hasShip != undefined) cellSpace = hasShip;
-
-  return { coordinate, cellSpace };
+    this.cellSpace = 'is empty';
+    if (this.hasShip != undefined) this.cellSpace = this.hasShip;
+  }
 }
 
 module.exports = { Gameboard, GameboardCell };

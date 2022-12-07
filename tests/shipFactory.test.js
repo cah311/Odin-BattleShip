@@ -1,6 +1,6 @@
 const Ship = require('../src/shipFactory');
 
-const myBattleship = Ship('Carson', 'battleship');
+const myBattleship = new Ship('Carson', 'battleship');
 
 it('returns player name', () => {
   expect(myBattleship.getPlayer()).toEqual('Carson');
@@ -14,7 +14,7 @@ it('returns length of ship', () => {
 });
 
 it('returns length of ship', () => {
-  const myBattleship2 = Ship('Carson', 'carrier');
+  const myBattleship2 = new Ship('Carson', 'carrier');
 
   expect(myBattleship2.getLength()).toEqual(5);
 });
@@ -25,7 +25,7 @@ it('should sink the battleship', () => {
   myBattleship.hit();
   myBattleship.hit();
 
-  expect(myBattleship.isSunk()).toBe(true);
+  expect(myBattleship.isSunk).toBe(true);
 });
 it('shows ship coordinates', () => {
   const placement = [
@@ -33,7 +33,7 @@ it('shows ship coordinates', () => {
     { x: 1, y: 'B' },
     { x: 1, y: 'C' },
   ];
-  const myShip = Ship('Greg', 'destroyer', placement);
+  const myShip = new Ship('Greg', 'destroyer', placement);
 
   expect(myShip.setCoordinates()).toStrictEqual([
     { x: 1, y: 'A' },
