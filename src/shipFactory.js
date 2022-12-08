@@ -1,13 +1,3 @@
-// carrier = 5
-// battleship = 4
-// destroyer = 3
-// submarine = 3
-// patrol boat = 2
-
-// const gameBoardFactory = require('./gameboardFactory');
-// const gameboard = gameBoardFactory.Gameboard;
-// let testBoard = gameboard();
-
 class Ship {
   constructor(player, type, coordinates) {
     this.player = player;
@@ -44,10 +34,6 @@ class Ship {
     return this.isSunk;
   };
   sinkShip = (value) => {
-    // gameboard.boats--;
-    // if (gameboard.boats == 0) {
-    //   gameboard.gameOver(gameboard.boats);
-    // }
     this.isSunk = value;
   };
 }

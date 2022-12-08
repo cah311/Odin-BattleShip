@@ -4,88 +4,105 @@ const cell = gameBoardFactory.GameboardCell;
 const Ship = require('../src/shipFactory');
 
 describe('Gameboard functions', () => {
-  let testBoard;
+  let playerTestBoard;
+  let opponantTestBoard;
 
   beforeAll(() => {
-    testBoard = new gameboard();
-    testBoard.buildGameboard();
+    playerTestBoard = new gameboard();
+    playerTestBoard.buildGameboard();
+
+    opponantTestBoard = new gameboard();
+    opponantTestBoard.buildGameboard();
   });
 
   it('creates a gameboard', () => {
-    expect(testBoard.cells.length).toBe(100);
+    expect(playerTestBoard.cells.length).toBe(100);
   });
 
   it('places ship at specified coordinates', () => {
     let chosenCoordinate = ['1A', '1B', '1C'];
-    testBoard.shipPlacement('Greg', 'submarine', chosenCoordinate);
+    playerTestBoard.shipPlacement('Greg', 'submarine', chosenCoordinate);
 
-    expect(testBoard.cells).not.toContainEqual({
-      cellSpace: 'is empty',
-      coordinate: '1A',
-    });
+    let sampleCell1 = playerTestBoard.cells.find(
+      (cell) => cell.coordinate === chosenCoordinate[0]
+    );
 
-    expect(testBoard.cells).not.toContainEqual({
-      cellSpace: 'is empty',
-      coordinate: '1B',
-    });
+    let sampleCell2 = playerTestBoard.cells[2];
 
-    expect(testBoard.cells).toContainEqual({
-      cellSpace: 'is empty',
-      coordinate: '1C',
-    });
+    expect(sampleCell1.coordinate).toEqual('1A');
+
+    expect(sampleCell1.cellSpace).not.toEqual('is empty');
+
+    expect(sampleCell2.cellSpace).toEqual('is empty');
   });
 
-  //   it('recieves attack', () => {
-  //     testBoard.recieveAttack('2B');
-  //     expect(testBoard.missedCellArray.length).toBe(1);
-  //   });
+  it('recieves attack', () => {
+    playerTestBoard.recieveAttack('2B');
+    let sampleCell = playerTestBoard.cells.find(
+      (cell) => cell.coordinate === '2B'
+    );
+    expect(playerTestBoard.missedCells).toBe(1);
+    expect(playerTestBoard.missedCellArray).toEqual(['2B']);
+    expect(sampleCell.beenAttacked).toEqual(true);
+  });
 
-  //   it('records hits on ship & sinks ship', () => {
-  //     testBoard.recieveAttack('1A');
-  //     testBoard.recieveAttack('1B');
-  //     testBoard.recieveAttack('1C');
+  it('records hits on ship & sinks ship', () => {
+    playerTestBoard.recieveAttack('1A');
+    playerTestBoard.recieveAttack('1B');
+    playerTestBoard.recieveAttack('1C');
 
-  //     const lastAttack = '1C';
+    const lastAttack = '1C';
 
-  //     let cellTest = testBoard.cells.find(
-  //       (cell) => cell.coordinate === lastAttack
-  //     );
-  //     let boat = cellTest.cellSpace;
-  //     expect(boat.isSunk).toBe(true);
-  //   });
+    let cellTest = playerTestBoard.cells.find(
+      (cell) => cell.coordinate === lastAttack
+    );
+    let boat = cellTest.cellSpace;
+    expect(boat.isSunk).toBe(true);
+  });
 
-  //   it('keeps track of misses and displays them', () => {
-  //     testBoard.recieveAttack('10D');
+  it('keeps track of misses and displays them', () => {
+    playerTestBoard.recieveAttack('10D');
 
-  //     expect(testBoard.missedCellArray).toEqual(['2B', '10D']);
-  //     expect(testBoard.missedCellArray.length).toBe(2);
-  //   });
+    expect(playerTestBoard.missedCellArray).toEqual(['2B', '10D']);
+    expect(playerTestBoard.missedCells).toBe(2);
+  });
 
-  //   it('shows if all boats are sunk', () => {
-  //     testBoard.shipPlacement('Sam', 'carrier', ['4C', '5C', '6C', '7C', '8C']);
-  //     testBoard.shipPlacement('Sally', 'battleship', ['8E', '8F', '8G', '8H']);
-  //     testBoard.shipPlacement('Luis', 'destroyer', ['2G', '2H', '2I']);
-  //     testBoard.shipPlacement('Preston', 'patrol boat', ['5J', '6J']);
+  it('shows if all boats are sunk', () => {
+    playerTestBoard.shipPlacement('Sam', 'carrier', [
+      '4C',
+      '5C',
+      '6C',
+      '7C',
+      '8C',
+    ]);
+    playerTestBoard.shipPlacement('Sally', 'battleship', [
+      '8E',
+      '8F',
+      '8G',
+      '8H',
+    ]);
+    playerTestBoard.shipPlacement('Luis', 'destroyer', ['2G', '2H', '2I']);
+    playerTestBoard.shipPlacement('Preston', 'patrol boat', ['5J', '6J']);
 
-  //     testBoard.recieveAttack('4C');
-  //     testBoard.recieveAttack('5C');
-  //     testBoard.recieveAttack('6C');
-  //     testBoard.recieveAttack('7C');
-  //     testBoard.recieveAttack('8C');
+    playerTestBoard.recieveAttack('4C');
+    playerTestBoard.recieveAttack('5C');
+    playerTestBoard.recieveAttack('6C');
+    playerTestBoard.recieveAttack('7C');
+    playerTestBoard.recieveAttack('8C');
 
-  //     testBoard.recieveAttack('8E');
-  //     testBoard.recieveAttack('8F');
-  //     testBoard.recieveAttack('8G');
-  //     testBoard.recieveAttack('8H');
+    playerTestBoard.recieveAttack('8E');
+    playerTestBoard.recieveAttack('8F');
+    playerTestBoard.recieveAttack('8G');
+    playerTestBoard.recieveAttack('8H');
 
-  //     testBoard.recieveAttack('2G');
-  //     testBoard.recieveAttack('2H');
-  //     testBoard.recieveAttack('2I');
+    playerTestBoard.recieveAttack('2G');
+    playerTestBoard.recieveAttack('2H');
+    playerTestBoard.recieveAttack('2I');
 
-  //     testBoard.recieveAttack('5J');
-  //     testBoard.recieveAttack('6J');
+    playerTestBoard.recieveAttack('5J');
+    playerTestBoard.recieveAttack('6J');
 
-  //     expect(testBoard.boats).toBe(0);
-  //     expect(testBoard.gameOver(testBoard.boats)).toBe(true);
-  //   });
+    expect(playerTestBoard.boats).toBe(0);
+    expect(playerTestBoard.gameOver(playerTestBoard.boats)).toBe(true);
+  });
 });

@@ -1,16 +1,14 @@
 const Ship = require('./shipFactory');
 
 class Gameboard {
-  constructor() {
+  constructor(owner) {
+    this.owner = owner;
     this.cells = [];
     this.boats = 0;
     this.missedCells = 0;
     this.missedCellArray = [];
+    this.takenAttacks = 0;
   }
-
-  getRemainingBoats = (remainingBoats) => {
-    return remainingBoats;
-  };
 
   buildGameboard() {
     const xAxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -22,6 +20,10 @@ class Gameboard {
     }
   }
 
+  getRemainingBoats = (remainingBoats) => {
+    return remainingBoats;
+  };
+
   shipPlacement = (playerName, shipType, coordinates) => {
     let ship = new Ship(playerName, shipType);
     let shipCoord = coordinates;
@@ -29,22 +31,25 @@ class Gameboard {
       let j = 0;
       let k = 0;
       let currentCoord = shipCoord[i];
-      //   console.log(this.cells[j].coordinate);
       while (currentCoord != this.cells[j].coordinate) {
         j++;
         k++;
       }
       this.cells[j].cellSpace = ship;
+      this.cells[j].hasShip = true;
     }
     this.boats++;
+    this.gameOver(this.boats);
   };
 
-  recieveAttack = (cellCoordinates) => {
+  recieveAttack = (attackCoordinates) => {
+    this.takenAttacks++;
     let cellTest = this.cells.find(
-      (cell) => cell.coordinate === cellCoordinates
+      (cell) => cell.coordinate === attackCoordinates
     );
+    cellTest.beenAttacked = true;
     if (cellTest.cellSpace == 'is empty') {
-      this.missedCellArray.push(cellCoordinates);
+      this.missedCellArray.push(attackCoordinates);
       this.missedCells++;
       return;
     } else {
@@ -69,14 +74,13 @@ class Gameboard {
 }
 
 class GameboardCell {
-  constructor(xCoordinate, yCoordinate, hasShip) {
+  constructor(xCoordinate, yCoordinate) {
     this.xCoordinate = xCoordinate;
     this.yCoordinate = yCoordinate;
-    this.hasShip = hasShip;
+    this.hasShip = false;
     this.coordinate = `${xCoordinate}${yCoordinate}`;
-
     this.cellSpace = 'is empty';
-    if (this.hasShip != undefined) this.cellSpace = this.hasShip;
+    this.beenAttacked = false;
   }
 }
 
