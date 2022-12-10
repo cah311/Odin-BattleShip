@@ -1,7 +1,7 @@
-const gameBoardFactory = require('../src/gameboardFactory');
+const gameBoardFactory = require('../src/factoryFunctions/gameboardFactory');
 const gameboard = gameBoardFactory.Gameboard;
 const cell = gameBoardFactory.GameboardCell;
-const Ship = require('../src/shipFactory');
+//const Ship = require('../src/shipFactory');
 
 describe('Gameboard functions', () => {
   let playerTestBoard;

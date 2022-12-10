@@ -1,4 +1,4 @@
-const Ship = require('../src/shipFactory');
+const Ship = require('../src/factoryFunctions/shipFactory');
 
 const myBattleship = new Ship('Carson', 'battleship');
 

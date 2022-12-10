@@ -1,10 +1,14 @@
-const gameboard = require('../src/gameboardFactory');
+const gameboard = require('./gameboardFactory');
 
-class Player {
+export class Player {
   constructor(name) {
     this.name = name;
     this.isComputer = false;
     this.isTurn = false;
+    if (this.name == null) {
+      this.name = 'Computer';
+      this.isComputer = true;
+    }
   }
 
   attack(opponantBoard, attackCoordinates) {
@@ -22,4 +26,4 @@ class Player {
   }
 }
 
-module.exports = { Player };
+//module.exports = { Player };

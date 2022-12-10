@@ -3,4 +3,4 @@ function printMe(string) {
   return string;
 }
 
-module.exports = printMe;
+module.exports = { printMe };

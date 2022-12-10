@@ -1,6 +1,7 @@
-const playerFactory = require('../src/playerFactory');
-const gameBoardFactory = require('../src/gameboardFactory');
-const player = playerFactory.Player;
+import { Player } from '../src/factoryFunctions/playerFactory';
+
+const gameBoardFactory = require('../src/factoryFunctions/gameboardFactory');
+//const player = playerFactory.Player;
 const gameboard = gameBoardFactory.Gameboard;
 
 describe('Player functions...', () => {
@@ -11,11 +12,11 @@ describe('Player functions...', () => {
   let p2Gameboard;
 
   beforeAll(() => {
-    player1 = new player('Carson');
+    player1 = new Player('Carson');
     p1Gameboard = new gameboard(player1.name);
     p1Gameboard.buildGameboard();
 
-    player2 = new player('Comp');
+    player2 = new Player('Comp');
     player2.isComputer = true;
     p2Gameboard = new gameboard(player2.name);
     p2Gameboard.buildGameboard();
