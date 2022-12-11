@@ -11,11 +11,25 @@ class Gameboard {
   }
 
   buildGameboard() {
+    const gameContainer = document.getElementById('game-page');
+    const gameboardContainer = document.createElement('div');
+    gameboardContainer.setAttribute('class', 'game-board-container');
+
+    gameContainer.append(gameboardContainer);
+
     const xAxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const yAxis = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     for (let i = 0; i <= yAxis.length - 1; i++) {
       for (let j = 0; j <= xAxis.length - 1; j++) {
         this.cells.push(new GameboardCell(xAxis[j], yAxis[i]));
+        // eval("const " + 'cell' + i + j) = document.createElement('div')
+        // eval("cell" + i + j).setAttribute('class', 'game-cell')
+        // eval("cell" + i + j).setAttribute('id', `cell${i}${j}`)
+        const cell = document.createElement('div');
+        cell.setAttribute('class', 'game-cell');
+        cell.setAttribute('id', `cell${xAxis[i]}${yAxis[j]}`);
+
+        gameboardContainer.append(cell);
       }
     }
   }
