@@ -20,9 +20,6 @@ export function gameLoop(game) {
     if (thing.includes('cell') == true) {
       let cell = thing.slice(4);
       player2Gameboard.recieveAttack(cell);
-      console.log(cell);
-      console.log(player2Gameboard);
-      return cell;
     }
   });
 }

@@ -58,22 +58,33 @@ class Gameboard {
   };
 
   recieveAttack = (attackCoordinates) => {
+    const attackedCell = document
+      .getElementById(`${this.owner}-game-board`)
+      .querySelector(`#cell${attackCoordinates}`);
+    const attackMarker = document.createElement('div');
     this.takenAttacks++;
     let cellTest = this.cells.find(
       (cell) => cell.coordinate === attackCoordinates
     );
-    cellTest.beenAttacked = true;
-    if (cellTest.cellSpace == 'is empty') {
-      this.missedCellArray.push(attackCoordinates);
-      this.missedCells++;
-      return;
-    } else {
-      let shipIdentifier = cellTest.cellSpace;
-      shipIdentifier.hit();
-      if (shipIdentifier.isSunk == true) {
-        this.boats--;
-        if (this.boats == 0) {
-          this.gameOver(this.boats);
+    if (cellTest.beenAttacked == false) {
+      if (cellTest.cellSpace == 'is empty') {
+        cellTest.beenAttacked = true;
+        this.missedCellArray.push(attackCoordinates);
+        this.missedCells++;
+        attackMarker.innerHTML = 'X';
+        attackedCell.append(attackMarker);
+        return;
+      } else {
+        cellTest.beenAttacked = true;
+        let shipIdentifier = cellTest.cellSpace;
+        shipIdentifier.hit();
+        attackMarker.innerHTML = 'O';
+        attackedCell.append(attackMarker);
+        if (shipIdentifier.isSunk == true) {
+          this.boats--;
+          if (this.boats == 0) {
+            this.gameOver(this.boats);
+          }
         }
       }
     }
@@ -97,12 +108,6 @@ class GameboardCell {
     this.cellSpace = 'is empty';
     this.beenAttacked = false;
   }
-
-  returnCoordinates = (event) => {
-    event.target = document;
-    console.log(event.target);
-    return event.target;
-  };
 }
 
 module.exports = { Gameboard, GameboardCell };
