@@ -39,6 +39,7 @@ startButton.addEventListener('click', (e) => {
   console.log(player2Gameboard);
 
   game.startGame();
+  game.chooseWhoStarts();
   console.log(game);
 
   gameLoop(game);
