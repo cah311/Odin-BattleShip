@@ -14,6 +14,7 @@ class Gameboard {
     const gameContainer = document.getElementById('game-page');
     const gameboardContainer = document.createElement('div');
     gameboardContainer.setAttribute('class', 'game-board-container');
+    gameboardContainer.setAttribute('id', `${this.owner}-game-board`);
 
     gameContainer.append(gameboardContainer);
 
@@ -27,7 +28,7 @@ class Gameboard {
         // eval("cell" + i + j).setAttribute('id', `cell${i}${j}`)
         const cell = document.createElement('div');
         cell.setAttribute('class', 'game-cell');
-        cell.setAttribute('id', `cell${xAxis[i]}${yAxis[j]}`);
+        cell.setAttribute('id', `cell${xAxis[j]}${yAxis[i]}`);
 
         gameboardContainer.append(cell);
       }
@@ -96,6 +97,12 @@ class GameboardCell {
     this.cellSpace = 'is empty';
     this.beenAttacked = false;
   }
+
+  returnCoordinates = (event) => {
+    event.target = document;
+    console.log(event.target);
+    return event.target;
+  };
 }
 
 module.exports = { Gameboard, GameboardCell };

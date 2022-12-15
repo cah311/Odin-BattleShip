@@ -28,8 +28,9 @@ export function welcomeScreen() {
 
   const submitButton = document.createElement('button');
   submitButton.setAttribute('type', 'submit');
+  submitButton.setAttribute('id', 'submit-button');
   submitButton.innerHTML = 'Start Game';
-  submitButton.onclick = generateGameboards;
+  //submitButton.onclick = generateGameboards;
 
   //appends
   document.body.append(welcomePage);

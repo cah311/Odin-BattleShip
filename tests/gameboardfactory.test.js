@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 const gameBoardFactory = require('../src/factoryFunctions/gameboardFactory');
 const gameboard = gameBoardFactory.Gameboard;
 const cell = gameBoardFactory.GameboardCell;
@@ -6,6 +10,7 @@ const cell = gameBoardFactory.GameboardCell;
 describe('Gameboard functions', () => {
   let playerTestBoard;
   let opponantTestBoard;
+  document.body.innerHTML = ' <div id="game-page"></div>';
 
   beforeAll(() => {
     playerTestBoard = new gameboard();

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Player } from '../src/factoryFunctions/playerFactory';
 
 const gameBoardFactory = require('../src/factoryFunctions/gameboardFactory');
@@ -10,6 +14,8 @@ describe('Player functions...', () => {
 
   let player2;
   let p2Gameboard;
+
+  document.body.innerHTML = ' <div id="game-page"></div>';
 
   beforeAll(() => {
     player1 = new Player('Carson');
