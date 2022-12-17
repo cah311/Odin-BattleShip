@@ -16,7 +16,7 @@ export class Player {
       let randomNumber = Math.floor(Math.random() * 101);
       let randomCell = opponantBoard.cells[randomNumber];
       while (randomCell.beenAttacked == true) {
-        randomNumber = Math.random() * 100;
+        randomNumber = Math.floor(Math.random() * 100);
         randomCell = opponantBoard.cells[randomNumber];
       }
       return opponantBoard.recieveAttack(randomCell.coordinate);

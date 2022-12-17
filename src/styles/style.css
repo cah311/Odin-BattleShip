@@ -2,9 +2,22 @@
   color: red;
 }
 
-.game-page {
+#welcome-page.active {
+  opacity: 1;
+  scale: 1;
+}
+
+#welcome-page {
+  opacity: 0;
+  scale: 0;
+}
+
+#game-page {
+  display: inline-flex;
+  flex-direction: row;
   width: 100wv;
   height: 100hv;
+  border: 3px solid orange;
 }
 
 .game-cell {
@@ -19,4 +32,29 @@
   border: 1px solid red;
   height: 23.6rem;
   width: 23.8rem;
+}
+
+#Computer-game-board {
+  opacity: 0;
+}
+
+#Computer-game-board.active {
+  opacity: 1;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid blueviolet;
+  height: 23.6rem;
+  width: 23.8rem;
+}
+
+#ship-generator-container {
+  height: 20rem;
+  width: 20rem;
+  border: 2.9px solid lightgreen;
+}
+
+.ship-cell {
+  height: 2rem;
+  width: 2rem;
+  border: 2.9px solid skyblue;
 }

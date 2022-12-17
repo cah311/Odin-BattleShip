@@ -2,7 +2,8 @@ import { generateGameboards } from './gameScreen';
 
 export function welcomeScreen() {
   const welcomePage = document.createElement('div');
-  welcomePage.setAttribute('class', 'welcome-welcomePage');
+  welcomePage.setAttribute('id', 'welcome-page');
+  welcomePage.setAttribute('class', 'active');
 
   // logo
   const welcomeGameLogo = document.createElement('h1');
@@ -40,4 +41,9 @@ export function welcomeScreen() {
   formwelcomePage.append(nameLabel);
   formwelcomePage.append(nameInput);
   formwelcomePage.append(submitButton);
+}
+
+export function closeWelcomeScreen(welcomeScreen) {
+  if (welcomeScreen == null) return;
+  welcomeScreen.classList.remove('active');
 }

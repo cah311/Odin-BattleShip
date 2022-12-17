@@ -1,4 +1,4 @@
-class Ship {
+export class Ship {
   constructor(player, type, coordinates) {
     this.player = player;
     this.type = type;
@@ -36,6 +36,25 @@ class Ship {
   sinkShip = (value) => {
     this.isSunk = value;
   };
+
+  createShip = () => {
+    const shipGenElement = document.getElementById('ship-generator-container');
+    const shipContainer = document.createElement('div');
+    shipContainer.setAttribute('class', 'ship-element');
+    shipContainer.setAttribute('id', `${this.type}-element`);
+    shipGenElement.append(shipContainer);
+    let length;
+    if (this.type == 'carrier') length = 5;
+    if (this.type == 'battleship') length = 4;
+    if (this.type == 'destroyer' || this.type == 'submarine') length = 3;
+    if (this.type == 'patrol boat') length = 2;
+
+    for (let i = length; i != 0; i--) {
+      const shipCell = document.createElement('div');
+      shipCell.setAttribute('class', 'ship-cell');
+      shipContainer.append(shipCell);
+    }
+  };
 }
 
-module.exports = Ship;
+//module.exports = Ship;
