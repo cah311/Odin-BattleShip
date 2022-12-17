@@ -53,8 +53,19 @@
   border: 2.9px solid lightgreen;
 }
 
+.ship-element.moveable {
+  position: absolute;
+  border: 2.9px solid brown;
+}
+
 .ship-cell {
   height: 2rem;
   width: 2rem;
   border: 2.9px solid skyblue;
+}
+
+.horizontal {
+}
+
+.vertical {
 }

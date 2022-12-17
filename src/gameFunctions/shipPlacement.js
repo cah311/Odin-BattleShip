@@ -1,4 +1,5 @@
 import { Ship } from '../factoryFunctions/shipFactory';
+import { moveShip } from './shipMovement';
 
 export function shipPlacement(player1Gameboard, player2Gameboard) {
   player1Gameboard.shipPlacement(player1Gameboard.owner, 'carrier', [
@@ -93,6 +94,8 @@ function generateShips(player1Gameboard) {
 
   while (standby == true) {
     let shipElement = document.getElementById(`${shipType}-element`);
+    shipElement.classList.add('moveable');
+    moveShip(shipElement);
     return;
   }
 }
