@@ -6,6 +6,7 @@ export class Ship {
     this.coordinates = coordinates;
     this.hits = 0;
     this.isSunk = false;
+    this.axis;
   }
 
   getPlayer = () => this.player;

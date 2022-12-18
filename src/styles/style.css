@@ -58,14 +58,17 @@
   border: 2.9px solid brown;
 }
 
+.ship-element.moveable.vertical {
+  display: flex;
+  flex-direction: column;
+}
+.ship-element.moveable.horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
 .ship-cell {
   height: 2rem;
   width: 2rem;
   border: 2.9px solid skyblue;
-}
-
-.horizontal {
-}
-
-.vertical {
 }

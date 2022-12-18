@@ -1,6 +1,10 @@
 import { Ship } from '../factoryFunctions/shipFactory';
 import { moveShip } from './shipMovement';
 
+let shipsRemaining = 5;
+let standby = false;
+let currentShipType;
+
 export function shipPlacement(player1Gameboard, player2Gameboard) {
   player1Gameboard.shipPlacement(player1Gameboard.owner, 'carrier', [
     '4C',
@@ -61,6 +65,7 @@ export function shipPlacement(player1Gameboard, player2Gameboard) {
 
 export function shipPlacementPhase(player1Gameboard) {
   generateShipContainer();
+  shipAxisButton();
   generateShips(player1Gameboard);
 }
 
@@ -73,28 +78,47 @@ function generateShipContainer() {
   gameContainer.append(shipGenerator);
 }
 
+function shipAxisButton() {
+  const shipGenerator = document.getElementById('ship-generator-container');
+
+  const axisButton = document.createElement('button');
+  axisButton.innerHTML = 'Change Axis';
+  axisButton.setAttribute('id', 'ship-axis-button');
+  shipGenerator.append(axisButton);
+
+  axisButton.addEventListener('click', (e) => {
+    let shipElement = document.getElementById(`${currentShipType}-element`);
+
+    if (shipElement.classList.contains('vertical')) {
+      shipElement.classList.remove('vertical');
+      shipElement.classList.add('horizontal');
+    } else if (shipElement.classList.contains('horizontal')) {
+      shipElement.classList.remove('horizontal');
+      shipElement.classList.add('vertical');
+    }
+    console.log(shipElement);
+  });
+}
+
 function generateShips(player1Gameboard) {
   const shipGenerator = document.getElementById('ship-generator-container');
 
-  let shipsRemaining = 5;
-  let standby = false;
-  let shipType;
-
   while (shipsRemaining != 0 && standby == false) {
-    if (shipsRemaining == 5) shipType = 'carrier';
-    if (shipsRemaining == 4) shipType = 'battleship';
-    if (shipsRemaining == 3) shipType = 'destroyer';
-    if (shipsRemaining == 2) shipType = 'submarine';
-    if (shipsRemaining == 1) shipType = 'patrol boat';
+    if (shipsRemaining == 5) currentShipType = 'carrier';
+    if (shipsRemaining == 4) currentShipType = 'battleship';
+    if (shipsRemaining == 3) currentShipType = 'destroyer';
+    if (shipsRemaining == 2) currentShipType = 'submarine';
+    if (shipsRemaining == 1) currentShipType = 'patrol boat';
 
-    let newShip = new Ship(player1Gameboard.owner, shipType);
+    let newShip = new Ship(player1Gameboard.owner, currentShipType);
     newShip.createShip();
     standby = true;
   }
 
   while (standby == true) {
-    let shipElement = document.getElementById(`${shipType}-element`);
+    let shipElement = document.getElementById(`${currentShipType}-element`);
     shipElement.classList.add('moveable');
+    shipElement.classList.add('vertical');
     moveShip(shipElement);
     return;
   }
