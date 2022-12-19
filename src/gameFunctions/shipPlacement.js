@@ -102,6 +102,7 @@ function shipAxisButton() {
 
 function generateShips(player1Gameboard) {
   const shipGenerator = document.getElementById('ship-generator-container');
+  const gameBoard = player1Gameboard;
 
   while (shipsRemaining != 0 && standby == false) {
     if (shipsRemaining == 5) currentShipType = 'carrier';
@@ -120,6 +121,26 @@ function generateShips(player1Gameboard) {
     shipElement.classList.add('moveable');
     shipElement.classList.add('vertical');
     moveShip(shipElement);
+    setShip(gameBoard);
     return;
   }
+}
+
+export function setShip(board) {
+  const playerBoard = document.getElementById(`${board.owner}-game-board`);
+  console.log(playerBoard);
+
+  playerBoard.addEventListener('mouseup', function (e) {
+    // if (e.target.innerHTML != '') {
+    //   return;
+    // }
+
+    let thing = e.target.id;
+    // console.log(thing.includes('cell'));
+
+    if (thing.includes('cell') == true) {
+      let cell = thing.slice(4);
+      console.log(cell);
+    }
+  });
 }

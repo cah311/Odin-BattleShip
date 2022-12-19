@@ -56,6 +56,7 @@
 .ship-element.moveable {
   position: absolute;
   border: 2.9px solid brown;
+  z-index: 100;
 }
 
 .ship-element.moveable.vertical {
